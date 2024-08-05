@@ -5385,20 +5385,23 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 case 'tPower': // power
                 case 'tRange': // range
                 case 'tSub': // subtraction
+                    $op3 = $space0[$token['data']];
                     $op2 = array_pop($formulaStrings);
                     $op1 = array_pop($formulaStrings);
-                    $formulaStrings[] = "$op1$space1$space0{$token['data']}$op2";
+                    $formulaStrings[] = "$op1$space1$op3$op2";
                     unset($space0, $space1);
                     break;
                 case 'tUplus': // unary plus
                 case 'tUminus': // unary minus
+                    $op3 = $space0[$token['data']];
                     $op = array_pop($formulaStrings);
-                    $formulaStrings[] = "$space1$space0{$token['data']}$op";
+                    $formulaStrings[] = "$space1$op3$op";
                     unset($space0, $space1);
                     break;
                 case 'tPercent': // percent sign
+                    $op3 = $space0[$token['data']];
                     $op = array_pop($formulaStrings);
-                    $formulaStrings[] = "$op$space1$space0{$token['data']}";
+                    $formulaStrings[] = "$op$space1$op3";
                     unset($space0, $space1);
                     break;
                 case 'tAttrVolatile': // indicates volatile function
@@ -5445,7 +5448,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                             $ops[] = array_pop($formulaStrings);
                         }
                         $ops = array_reverse($ops);
-                        $formulaStrings[] = "$space1$space0{$token['data']['function']}(" . implode(',', $ops) . ")";
+                        $op3 = $space0[$token['data']['function']];
+                        $formulaStrings[] = "$space1$op3(" . implode(',', $ops) . ")";
                         unset($space0, $space1);
                     } else {
                         // add-in function
@@ -5474,7 +5478,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                     // bite off chunk of additional data
                     $cellRangeAddressList = $this->readBIFF8CellRangeAddressList($additionalData);
                     $additionalData = substr($additionalData, $cellRangeAddressList['size']);
-                    $formulaStrings[] = "$space1$space0{$token['data']}";
+                    $op = $space0[$token['data']];
+                    $formulaStrings[] = "$space1$op";
                     unset($space0, $space1);
                     break;
                 case 'tArea': // cell range address
@@ -5493,7 +5498,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 case 'tRefN':
                 case 'tAreaN':
                 case 'tStr': // string
-                    $formulaStrings[] = "$space1$space0{$token['data']}";
+                    $op = $space0[$token['data']];
+                    $formulaStrings[] = "$space1$op";
                     unset($space0, $space1);
                     break;
             }
