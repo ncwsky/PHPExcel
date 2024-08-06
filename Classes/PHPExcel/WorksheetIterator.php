@@ -63,6 +63,7 @@ class PHPExcel_WorksheetIterator implements Iterator
     /**
      * Rewind iterator
      */
+    #[\ReturnTypeWillChange] // 用于>=8.1抑制错误提示
     public function rewind()
     {
         $this->position = 0;
@@ -72,7 +73,9 @@ class PHPExcel_WorksheetIterator implements Iterator
      * Current PHPExcel_Worksheet
      *
      * @return PHPExcel_Worksheet
+     * @throws PHPExcel_Exception
      */
+    #[\ReturnTypeWillChange] // 用于>=8.1抑制错误提示
     public function current()
     {
         return $this->subject->getSheet($this->position);
@@ -83,6 +86,7 @@ class PHPExcel_WorksheetIterator implements Iterator
      *
      * @return int
      */
+    #[\ReturnTypeWillChange] // 用于>=8.1抑制错误提示
     public function key()
     {
         return $this->position;
@@ -91,6 +95,7 @@ class PHPExcel_WorksheetIterator implements Iterator
     /**
      * Next value
      */
+    #[\ReturnTypeWillChange] // 用于>=8.1抑制错误提示
     public function next()
     {
         ++$this->position;
@@ -101,6 +106,7 @@ class PHPExcel_WorksheetIterator implements Iterator
      *
      * @return boolean
      */
+    #[\ReturnTypeWillChange] // 用于>=8.1抑制错误提示
     public function valid()
     {
         return $this->position < $this->subject->getSheetCount();

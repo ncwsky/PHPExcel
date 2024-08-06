@@ -217,6 +217,9 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 
             // Create new ZIP file and open it for writing
             $zipClass = PHPExcel_Settings::getZipClass();
+            /**
+             * @var ZipArchive $objZip
+             */
             $objZip = new $zipClass();
 
             //    Retrieve OVERWRITE and CREATE constants from the instantiated zip class
