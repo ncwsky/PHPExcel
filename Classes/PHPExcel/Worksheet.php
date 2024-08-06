@@ -2620,9 +2620,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             $highestColumn = max($highestColumn, PHPExcel_Cell::columnIndexFromString($dimension->getColumnIndex()));
         }
 
-        // Loop through row dimensions
-        foreach ($this->rowDimensions as $dimension) {
-            $highestRow = max($highestRow, $dimension->getRowIndex());
+        if (!is_int($highestRow)) { //数字与字母比较在>7.4上会返回字母造成生成数据时死循环 这里不确定为何要循环判断
+            // Loop through row dimensions
+            foreach ($this->rowDimensions as $dimension) {
+                $highestRow = max($highestRow, $dimension->getRowIndex());
+            }
         }
 
         // Cache values
